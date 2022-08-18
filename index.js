@@ -10,7 +10,7 @@ app.use(express.static(path.join(__dirname, 'front/build')));
 app.use(express.json())
 
 app.get("/api", (req, res) => {
-  res.json({ message: "Heroku and CircleCI ready!!" });
+  res.json({ message: "Heroku and CircleCI ready!" });
 });
 
 app.get('*', (req, res) => {
