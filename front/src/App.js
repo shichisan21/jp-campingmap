@@ -5,8 +5,11 @@ import axios from 'axios';
 function App() {
   const [message, setMessage] = useState('');
   useEffect(() =>{
-    axios.get('/api')
-      .then(res => setMessage(res.data.message))
+    axios.get('/axios')
+      .then(res => {
+        console.log("受け取った----------------------------------------------------", res.data)
+        setMessage(res.data.message)
+      })
   },[])
   
   return (
