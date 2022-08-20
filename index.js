@@ -6,9 +6,9 @@ const path = require('path');
 const xml2js = require('xml2js');
 const xpath = require('xpath');
 const dom = require('xmldom').DOMParser;
-// const select = xpath.useNamespaces({
-//   "a": "http://olp.yahooapis.jp/ydf/1.0"
-// });
+const select = xpath.useNamespaces({
+  "a": "http://olp.yahooapis.jp/ydf/1.0"
+});
 
 const app = express();
 const PORT = process.env.PORT;
@@ -35,17 +35,27 @@ async function getRequest() {
 }
 
 function fetchCount(){
-  getRequest().then(value => {
-    console.log("--thrown", xmlContent)
+  const fetchData = getRequest().then(value => {
+    const doc = new dom().parseFromString(value);
+    const features = select("/a:YDF/a:Feature", doc)
+    // const cities = select(
+    //   "/a:YDF/a:Feature/a:Name/text()",
+    //   doc
+    // );
+    for(const feature of features) {
+      const name = select("a:Name/text()", feature)
+      console.log(`${name}`)
+    }
+    console.log("--thrown ---------------")
+    // console.log("--thrown ---------------", name[0].toString())
+    // console.log("--thrown ---------------", cities[1].nodeValue)
+    // return cities;
   })
+  return "OK";
+  // return fetchData;
 }
 
     // .then(res => {
-    // let result = xpath.evaluate('/ResultInfo/Count/text()', res.data, null, xpath.ORDERED_NODE_ITERATOR_TYPE, null)
-    // const city = select(
-    //   "/a:ResultInfo/a:Count/text()",
-    //   res.data, true
-    // )
     // console.log(res.data)
     // messageTest = res.data
     // xml2js.parseString(res.data, (err, result) =>{
@@ -68,10 +78,11 @@ function fetchCount(){
 // });
 
 app.get('/axios', (req, res) => {
+  const fetchResult = fetchCount();
   getRequest().then(value => {
-    console.log("--thrown", value)
-    res.send(value)
-    // res.send("後でvalueを投げる")
+    // console.log("--thrown", value)
+    // res.send(value)
+    res.send(fetchResult)
   })
 });
 
