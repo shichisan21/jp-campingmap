@@ -7,8 +7,8 @@ function App() {
   useEffect(() =>{
     axios.get('/axios')
       .then(res => {
-        console.log("受け取った----------------------------------------------------", res.data)
-        setMessage(res.data.message)
+        console.log("受け取った------", res)
+        setMessage(res.data)
       })
   },[])
   
