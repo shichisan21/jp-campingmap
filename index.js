@@ -34,8 +34,10 @@ async function getRequest() {
   }
 }
 
-function fetchCount(){
-  const fetchData = getRequest().then(value => {
+async function fetchCount(){
+  let xml_name = "";
+  let xml_addr = "";
+  await getRequest().then(value => {
     const doc = new dom().parseFromString(value);
     const features = select("/a:YDF/a:Feature", doc)
     // const cities = select(
@@ -44,14 +46,19 @@ function fetchCount(){
     // );
     for(const feature of features) {
       const name = select("a:Name/text()", feature)
-      console.log(`${name}`)
+      const address = select("a:Property/a:Address/text()", feature)
+      console.log("NAME: ", name.toString())
+      console.log("ADRR: ", address.toString())
+      console.log("--------------------------")
+      xml_name = name.toString()
+      xml_addr = address.toString()
     }
-    console.log("--thrown ---------------")
+    console.log("--thrown ---------------", xml_name, xml_addr)
     // console.log("--thrown ---------------", name[0].toString())
     // console.log("--thrown ---------------", cities[1].nodeValue)
     // return cities;
   })
-  return "OK";
+  return xml_name;
   // return fetchData;
 }
 
@@ -78,11 +85,14 @@ function fetchCount(){
 // });
 
 app.get('/axios', (req, res) => {
-  const fetchResult = fetchCount();
+  const fetchResult = fetchCount().then(xml_name => {
+    console.log("--Received", xml_name)
+    res.send(xml_name)
+  })
   getRequest().then(value => {
     // console.log("--thrown", value)
     // res.send(value)
-    res.send(fetchResult)
+    // res.send(fetchResult)
   })
 });
 
