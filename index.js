@@ -35,8 +35,7 @@ async function getRequest() {
 }
 
 async function fetchCount(){
-  let xml_name = "";
-  let xml_addr = "";
+  let xmlContents = [];
   await getRequest().then(value => {
     const doc = new dom().parseFromString(value);
     const features = select("/a:YDF/a:Feature", doc)
@@ -50,15 +49,15 @@ async function fetchCount(){
       console.log("NAME: ", name.toString())
       console.log("ADRR: ", address.toString())
       console.log("--------------------------")
-      xml_name = name.toString()
-      xml_addr = address.toString()
+      xmlContents[0] = name.toString()
+      xmlContents[1] = address.toString()
     }
-    console.log("--thrown ---------------", xml_name, xml_addr)
+    console.log("--thrown ---------------", xmlContents)
     // console.log("--thrown ---------------", name[0].toString())
     // console.log("--thrown ---------------", cities[1].nodeValue)
     // return cities;
   })
-  return xml_name;
+  return xmlContents;
   // return fetchData;
 }
 

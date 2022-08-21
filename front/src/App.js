@@ -11,11 +11,13 @@ function App() {
         setMessage(res.data)
       })
   },[])
+  console.log("message this is", message)
   
   return (
     <div className="App">
       <h1>フロントエンド</h1>
-      <p>{ message }</p>
+      <p>{ message[0] } </p>
+      <p>{ message[1] } </p>
     </div>
   );
 }
