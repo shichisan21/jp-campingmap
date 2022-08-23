@@ -3,7 +3,6 @@ require('dotenv').config();
 const express = require('express');
 const axios = require('axios');
 const path = require('path');
-const xml2js = require('xml2js');
 const xpath = require('xpath');
 const dom = require('xmldom').DOMParser;
 const select = xpath.useNamespaces({
@@ -53,6 +52,9 @@ async function fetchCount(){
       xmlContents[1] = address.toString()
     }
     console.log("--thrown ---------------", xmlContents)
+    xmlContents.map((value) => {
+      console.log("map", value)
+    })
     // console.log("--thrown ---------------", name[0].toString())
     // console.log("--thrown ---------------", cities[1].nodeValue)
     // return cities;
