@@ -11,9 +11,14 @@ const select = xpath.useNamespaces({
 
 const app = express();
 const PORT = process.env.PORT;
+
 const YAHOO_API_KEY = process.env.YAHOO_API_KEY;
+const RESULT_MAX = 100;
+const PREFECTURE = 34;
+const QUERY = "キャンプ"
+
 const request_url_base = axios.create({
-  baseURL: `https://map.yahooapis.jp/search/local/V1/localSearch?appid=${YAHOO_API_KEY}&query=`
+  baseURL: encodeURI(`https://map.yahooapis.jp/search/local/V1/localSearch?appid=${YAHOO_API_KEY}&results=${RESULT_MAX}&ac=${PREFECTURE}&query=${QUERY}`)
 });
 
 app.use(express.json());
@@ -24,8 +29,7 @@ app.get('/api', (req, res) => {
 });
 
 async function getRequest() {
-  const yolpReqData = await request_url_base.get(`%E3%82%AD%E3%83%A3%E3%83%B3%E3%83%97`)
-  // console.log(yolpReqData.data)
+  const yolpReqData = await request_url_base.get()
   if (yolpReqData.data) {
     return yolpReqData.data;
   } else {
@@ -42,70 +46,23 @@ async function fetchCount(){
     //   "/a:YDF/a:Feature/a:Name/text()",
     //   doc
     // );
-    console.log(typeof features)
 
     features.forEach((element, index) => {
       const name = select("a:Name/text()", element)
       const address = select("a:Property/a:Address/text()", element)
-      console.log("NAME: ", name.toString())
-      console.log("ADRR: ", address.toString())
-      console.log("--------------------------")
+      // console.log("NAME: ", name.toString())
+      // console.log("ADRR: ", address.toString())
+      // console.log("--------------------------")
       xmlContents[index] = (name.toString() + ' ' + address.toString())
     });
-    
-    // for(const feature of features) {
-    //   const name = select("a:Name/text()", feature)
-    //   const address = select("a:Property/a:Address/text()", feature)
-    //   console.log("NAME: ", name.toString())
-    //   console.log("ADRR: ", address.toString())
-    //   console.log("--------------------------")
-    //   xmlContents[0] = name.toString()
-    //   xmlContents[1] = address.toString()
-    // }
-    console.log("--thrown ---------------", xmlContents)
-
-    xmlContents.map((value) => {
-      console.log("map", value)
-    })
-    // console.log("--thrown ---------------", name[0].toString())
-    // console.log("--thrown ---------------", cities[1].nodeValue)
-    // return cities;
+    console.log("**************Received from YOLP**************"+"\n", xmlContents)
   })
   return xmlContents;
-  // return fetchData;
 }
 
-    // .then(res => {
-    // console.log(res.data)
-    // messageTest = res.data
-    // xml2js.parseString(res.data, (err, result) =>{
-    //   if(err){
-    //     console.log(err.message)
-    //   }else{
-    //     messageTest = result.YDF
-    //     result.json( messageTest )
-    //     console.log(result.YDF.Feature)
-    //   }
-    // })
-    // console.log("--thrown", messageTest)
-  // });
-// res.send(messageTest)
-// .then(res.send( messageTest ))
-// .then(res => {
-// // handle success
-//   res.send("aa")
-
-// });
-
 app.get('/axios', (req, res) => {
-  const fetchResult = fetchCount().then(xml_name => {
-    console.log("--Received", xml_name)
+  fetchCount().then(xml_name => {
     res.send(xml_name)
-  })
-  getRequest().then(value => {
-    // console.log("--thrown", value)
-    // res.send(value)
-    // res.send(fetchResult)
   })
 });
 

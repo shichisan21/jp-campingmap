@@ -7,11 +7,10 @@ function App() {
   useEffect(() =>{
     axios.get('/axios')
       .then(res => {
-        console.log("受け取った------", res)
         setMessage(res.data)
       })
   },[])
-  console.log("message this is", message)
+  console.log("message raw data", message)
   
   return (
     <div className="App">
