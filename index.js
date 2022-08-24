@@ -15,10 +15,11 @@ const PORT = process.env.PORT;
 const YAHOO_API_KEY = process.env.YAHOO_API_KEY;
 const RESULT_MAX = 100;
 const PREFECTURE = 34;
-const QUERY = "キャンプ"
+const QUERY = "キャンプ";
+const GENRE = "0303006";
 
 const request_url_base = axios.create({
-  baseURL: encodeURI(`https://map.yahooapis.jp/search/local/V1/localSearch?appid=${YAHOO_API_KEY}&results=${RESULT_MAX}&ac=${PREFECTURE}&query=${QUERY}`)
+  baseURL: encodeURI(`https://map.yahooapis.jp/search/local/V1/localSearch?appid=${YAHOO_API_KEY}&results=${RESULT_MAX}&ac=${PREFECTURE}&gc=${GENRE}`)
 });
 
 app.use(express.json());
