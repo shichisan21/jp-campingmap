@@ -42,16 +42,28 @@ async function fetchCount(){
     //   "/a:YDF/a:Feature/a:Name/text()",
     //   doc
     // );
-    for(const feature of features) {
-      const name = select("a:Name/text()", feature)
-      const address = select("a:Property/a:Address/text()", feature)
+    console.log(typeof features)
+
+    features.forEach((element, index) => {
+      const name = select("a:Name/text()", element)
+      const address = select("a:Property/a:Address/text()", element)
       console.log("NAME: ", name.toString())
       console.log("ADRR: ", address.toString())
       console.log("--------------------------")
-      xmlContents[0] = name.toString()
-      xmlContents[1] = address.toString()
-    }
+      xmlContents[index] = (name.toString() + ' ' + address.toString())
+    });
+    
+    // for(const feature of features) {
+    //   const name = select("a:Name/text()", feature)
+    //   const address = select("a:Property/a:Address/text()", feature)
+    //   console.log("NAME: ", name.toString())
+    //   console.log("ADRR: ", address.toString())
+    //   console.log("--------------------------")
+    //   xmlContents[0] = name.toString()
+    //   xmlContents[1] = address.toString()
+    // }
     console.log("--thrown ---------------", xmlContents)
+
     xmlContents.map((value) => {
       console.log("map", value)
     })
