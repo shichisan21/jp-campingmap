@@ -24,7 +24,7 @@ app.get('/api', (req, res) => {
 });
 
 async function getRequest() {
-  const yolpReqData = await request_url_base.get(`%E3%83%A9%E3%83%BC%E3%83%A1%E3%83%B3`)
+  const yolpReqData = await request_url_base.get(`%E3%82%AD%E3%83%A3%E3%83%B3%E3%83%97`)
   // console.log(yolpReqData.data)
   if (yolpReqData.data) {
     return yolpReqData.data;

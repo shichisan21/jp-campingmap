@@ -16,8 +16,13 @@ function App() {
   return (
     <div className="App">
       <h1>フロントエンド</h1>
-      <p>{ message[0] } </p>
-      <p>{ message[1] } </p>
+        {message && message.map((element, index) =>{
+          return (
+            <li key={index}>
+              {element}
+            </li>
+          )}
+        )}
     </div>
   );
 }
