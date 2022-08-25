@@ -15,7 +15,7 @@ const PORT = process.env.PORT;
 const YAHOO_API_KEY = process.env.YAHOO_API_KEY;
 const RESULT_MAX = 100;
 const PREFECTURE = 34;
-const QUERY = "キャンプ";
+// const QUERY = "桂浜キャンプ場";
 const GENRE = "0303006";
 
 const request_url_base = axios.create({
@@ -38,8 +38,9 @@ async function getRequest() {
   }
 }
 
-async function fetchCount(){
+async function fetchYolpData(){
   let xmlContents = [];
+  let jsonXmlContents = [];
   await getRequest().then(value => {
     const doc = new dom().parseFromString(value);
     const features = select("/a:YDF/a:Feature", doc)
@@ -54,16 +55,18 @@ async function fetchCount(){
       // console.log("NAME: ", name.toString())
       // console.log("ADRR: ", address.toString())
       // console.log("--------------------------")
-      xmlContents[index] = (name.toString() + ' ' + address.toString())
+      // xmlContents[index] = (name.toString() + ' ' + address.toString())
+      xmlContents[index] = {name: name.toString(), addr:address.toString()}
     });
-    console.log("**************Received from YOLP**************"+"\n", xmlContents)
+    jsonXmlContents = JSON.stringify(xmlContents);
+    console.log("**************Received from YOLP**************"+"\n", xmlContents);
   })
   return xmlContents;
 }
 
 app.get('/axios', (req, res) => {
-  fetchCount().then(xml_name => {
-    res.send(xml_name)
+  fetchYolpData().then(xmlContents => {
+    res.json(xmlContents)
   })
 });
 
