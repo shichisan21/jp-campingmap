@@ -13,8 +13,13 @@ import Paper from '@mui/material/Paper';
 
 function App() {
   const [message, setMessage] = useState('');
+  const [pref, setPref] = useState('東京都');
   useEffect(() =>{
-    axios.get('/axios')
+    axios.get('/axios', {
+      params: {
+        prefCode: 13
+      }
+    })
       .then(res => {
         setMessage(res.data)
       })
@@ -23,11 +28,37 @@ function App() {
   
   return (
     <div className="App">
+      <button onClick={() => axios.get('/axios', {
+        params: {
+          prefCode: 28
+        }
+      })
+      .then(res => {
+        setMessage(res.data)
+        setPref('兵庫県')
+      })
+      }>
+        兵庫県
+      </button>
+      <button onClick={() => axios.get('/axios', {
+        params: {
+          prefCode: 34
+        }
+      })
+      .then(res => {
+        setMessage(res.data)
+        setPref('広島県')
+      })
+      }>
+        広島県
+      </button>
       <div className='topContainer'>
         <h1>都道府県別キャンプ場リスト Yahoo!ローカルサーチ版</h1>
         <p>※ジャンルコードが「キャンプ場」の地点情報を都道府県別に抽出しています。</p>
         {message
           ?
+            <>
+            <p>{pref}は{message.length}件がヒットしました。</p>
             <TableContainer component={Paper}>
               <Table sx={{ maxWidth: 800 }} aria-label="simple table">
                 <TableHead>
@@ -38,7 +69,7 @@ function App() {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {message && message.map((element, index) =>{
+                  {message.map((element, index) =>{
                     return (
                       <TableRow
                         key={index}
@@ -46,14 +77,14 @@ function App() {
                       >
                         <TableCell component="th" scope="row">{index+1 + ''}</TableCell>
                         <TableCell align="right">{element.name}</TableCell>
-                        <TableCell>{element.addr}</TableCell>
+                        <TableCell><a href='#'>{element.addr}</a></TableCell>
                       </TableRow>
                     )}
                   )}
                 </TableBody>
               </Table>
-            </TableContainer>    
-
+            </TableContainer>
+            </>
           : <p>Loading...</p>
         }
       </div>

@@ -19,18 +19,17 @@ const PREFECTURE = 34;
 const GENRE = "0303006";
 
 const request_url_base = axios.create({
-  baseURL: encodeURI(`https://map.yahooapis.jp/search/local/V1/localSearch?appid=${YAHOO_API_KEY}&results=${RESULT_MAX}&ac=${PREFECTURE}&gc=${GENRE}`)
+  // baseURL: encodeURI(`https://map.yahooapis.jp/search/local/V1/localSearch?appid=${YAHOO_API_KEY}&results=${RESULT_MAX}&ac=${PREFECTURE}&gc=${GENRE}`)
+  baseURL: encodeURI(`https://map.yahooapis.jp/search/local/V1/localSearch?appid=${YAHOO_API_KEY}&results=${RESULT_MAX}&gc=${GENRE}&ac=29`)
 });
 
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'front/build')));
 
-app.get('/api', (req, res) => {
-  res.json({ message: "Heroku and CircleCI ready!" });
-});
-
-async function getRequest() {
-  const yolpReqData = await request_url_base.get()
+async function getRequest(prefCode) {
+  console.log("県コード", prefCode)
+  const yolpReqData = await axios.get(`https://map.yahooapis.jp/search/local/V1/localSearch?appid=${YAHOO_API_KEY}&results=${RESULT_MAX}&gc=${GENRE}&ac=${prefCode}`)
+  // const yolpReqData = await request_url_base.get()
   if (yolpReqData.data) {
     return yolpReqData.data;
   } else {
@@ -38,10 +37,10 @@ async function getRequest() {
   }
 }
 
-async function fetchYolpData(){
+async function fetchYolpData(prefCode){
   let xmlContents = [];
   let jsonXmlContents = [];
-  await getRequest().then(value => {
+  await getRequest(prefCode).then(value => {
     const doc = new dom().parseFromString(value);
     const features = select("/a:YDF/a:Feature", doc)
     // const cities = select(
@@ -65,7 +64,8 @@ async function fetchYolpData(){
 }
 
 app.get('/axios', (req, res) => {
-  fetchYolpData().then(xmlContents => {
+  console.log('params', req.query.prefCode)
+  fetchYolpData(req.query.prefCode).then(xmlContents => {
     res.json(xmlContents)
   })
 });
