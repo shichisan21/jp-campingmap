@@ -2,6 +2,9 @@ import './App.css';
 import { useState,useEffect } from 'react';
 import axios from 'axios';
 
+// Component読み込み
+import PrefButtonGenerate from './component/PrefButtonGenerate';
+
 // MUIパーツ読み込み
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -28,6 +31,10 @@ function App() {
   
   return (
     <div className="App">
+      <PrefButtonGenerate
+        setMessage = {setMessage}
+        setPref = {setPref}
+      />
       <button onClick={() => axios.get('/axios', {
         params: {
           prefCode: 28
