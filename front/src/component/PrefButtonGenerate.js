@@ -1,20 +1,11 @@
 import { useState } from "react";
+import FetchList from "./FetchList";
 
-import axios from "axios";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import Box from "@mui/material/Box";
-
-function fetchList(code) {
-  console.log(code);
-  return axios.get("/axios", {
-    params: {
-      prefCode: code,
-    },
-  });
-}
 
 function PrefButtonGenerate(props) {
   const { setMessage, setPref } = props;
@@ -29,7 +20,7 @@ function PrefButtonGenerate(props) {
 
   const handleChange = (e) => {
     console.log("handle", e.target.value);
-    fetchList(e.target.value + 1).then((res) => {
+    FetchList(e.target.value + 1).then((res) => {
       setMessage(res.data);
       setPref(prefArray[e.target.value]);
       setPrefCode(e.target.value);
@@ -57,21 +48,6 @@ function PrefButtonGenerate(props) {
           </Select>
         </FormControl>
       </Box>
-      {/* {prefArray.map((pref, index) => (
-        <Button
-          key={index}
-          variant='outlined'
-          onClick={() =>
-            fetchList(index + 1).then((res) => {
-              setMessage(res.data);
-              setPref(pref);
-              console.log("sended pref code", index + 1);
-            })
-          }
-        >
-          {pref}
-        </Button>
-      ))} */}
     </>
   );
 }

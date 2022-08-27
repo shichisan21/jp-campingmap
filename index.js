@@ -49,12 +49,17 @@ async function fetchYolpData(prefCode) {
 
     features.forEach((element, index) => {
       const name = select("a:Name/text()", element);
+      const uId = select("a:Property/a:Uid/text()", element);
       const address = select("a:Property/a:Address/text()", element);
       // console.log("NAME: ", name.toString())
       // console.log("ADRR: ", address.toString())
       // console.log("--------------------------")
       // xmlContents[index] = (name.toString() + ' ' + address.toString())
-      xmlContents[index] = { name: name.toString(), addr: address.toString() };
+      xmlContents[index] = {
+        name: name.toString(),
+        uId: uId.toString(),
+        addr: address.toString(),
+      };
     });
     jsonXmlContents = JSON.stringify(xmlContents);
     console.log(

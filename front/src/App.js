@@ -1,6 +1,5 @@
 import "./App.css";
 import { useState, useEffect } from "react";
-import axios from "axios";
 
 // Component読み込み
 import PrefButtonGenerate from "./component/PrefButtonGenerate";
@@ -48,8 +47,8 @@ function App() {
                 <TableHead>
                   <TableRow>
                     <TableCell>No</TableCell>
-                    <TableCell align='right'>名前</TableCell>
-                    <TableCell>住所</TableCell>
+                    <TableCell align='center'>名前</TableCell>
+                    <TableCell align='center'>住所</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -66,7 +65,14 @@ function App() {
                         </TableCell>
                         <TableCell align='right'>{element.name}</TableCell>
                         <TableCell>
-                          <a href='#'>{element.addr}</a>
+                          {/* prettier-ignore */}
+                          <a
+                            href={encodeURI(`https://map.yahoo.co.jp/search?q=${element.addr}`)}
+                            target='_blank'
+                            rel='noreferrer'
+                          >
+                            {element.addr}
+                          </a>
                         </TableCell>
                       </TableRow>
                     );
