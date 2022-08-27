@@ -1,6 +1,7 @@
-.topContainer{
+.topContainer {
   text-align: center;
   margin-bottom: 50px;
+  max-width: 850px;
 }
 
 table {
@@ -8,23 +9,23 @@ table {
   margin-right: auto;
 }
 
-.topMessage{
+.topMessage {
   margin: 10px 0;
   border: solid 2px;
 }
 
-.taskForm{
+.taskForm {
   margin: 20px 0;
 }
 
-.cardButton{
+.cardButton {
   text-align: center;
 }
 
-.cardButton Button{
+.cardButton Button {
   margin: 10px;
 }
 
-.modalButton Button{
+.modalButton Button {
   margin: 0 10px 0 0;
 }
