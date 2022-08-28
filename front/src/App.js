@@ -63,14 +63,14 @@ function App() {
 
         <Grid item container>
           <Grid item sm={2}></Grid>
-
           <Grid item xs={12} sm={8}>
-            {fieldList && (
-              <p>
-                {prefName}は{fieldList.length}件がヒットしました。
-              </p>
-            )}
-
+            <div className='list-title-area'>
+              {fieldList && (
+                <p>
+                  {prefName}は{fieldList.length}件がヒットしました。
+                </p>
+              )}
+            </div>
             {fieldList ? (
               <>
                 <TableContainer component={Paper}>
@@ -113,7 +113,9 @@ function App() {
                 </TableContainer>
               </>
             ) : (
-              <p>都道府県を選択するとリストが表示されます。</p>
+              <div className='list-title-area'>
+                <p>都道府県を選択するとリストが表示されます。</p>
+              </div>
             )}
           </Grid>
           <Grid item sm={2}></Grid>

@@ -2,12 +2,6 @@
   text-align: center;
 }
 
-table {
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.topMessage {
-  margin: 10px 0;
-  border: solid 2px;
+.list-title-area {
+  text-align: center;
 }
