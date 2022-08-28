@@ -103,7 +103,7 @@ function App() {
                               <TableCell>
                                 {/* prettier-ignore */}
                                 <a
-                            href={encodeURI(`https://map.yahoo.co.jp/search?q=${element.addr}`)}
+                            href={encodeURI(`https://map.yahoo.co.jp/search?q=${element.tel}`)}
                             target='_blank'
                             rel='noreferrer'
                           >
