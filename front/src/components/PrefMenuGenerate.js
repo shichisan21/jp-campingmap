@@ -7,8 +7,8 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import Box from "@mui/material/Box";
 
-function PrefButtonGenerate(props) {
-  const { setMessage, setPref } = props;
+function PrefMenuGenerate(props) {
+  const { setFieldList, setPrefName } = props;
   const [prefCode, setPrefCode] = useState("");
 
   // prettier-ignore
@@ -19,12 +19,11 @@ function PrefButtonGenerate(props) {
     "佐賀県","長崎県","熊本県","大分県","宮崎県","鹿児島県","沖縄県"];
 
   const handleChange = (e) => {
-    console.log("handle", e.target.value);
+    console.log("Set pref code--->", e.target.value);
     FetchList(e.target.value + 1).then((res) => {
-      setMessage(res.data);
-      setPref(prefArray[e.target.value]);
+      setFieldList(res.data);
+      setPrefName(prefArray[e.target.value]);
       setPrefCode(e.target.value);
-      console.log("sended pref code", e.target.value + 1);
     });
   };
 
@@ -32,17 +31,17 @@ function PrefButtonGenerate(props) {
     <>
       <Box sx={{ minWidth: 300 }}>
         <FormControl fullWidth>
-          <InputLabel id='demo'>PREF</InputLabel>
+          <InputLabel id='prefMenu'>都道府県を選択してください</InputLabel>
           <Select
-            labelId='demo'
-            id='demo-select'
+            labelId='prefMenu'
+            id='prefSelect'
             value={prefCode}
-            label='PREF'
+            label='都道府県を選択してください'
             onChange={handleChange}
           >
-            {prefArray.map((pref, index) => (
+            {prefArray.map((name, index) => (
               <MenuItem key={index} value={index}>
-                {pref}
+                {name}
               </MenuItem>
             ))}
           </Select>
@@ -52,4 +51,4 @@ function PrefButtonGenerate(props) {
   );
 }
 
-export default PrefButtonGenerate;
+export default PrefMenuGenerate;

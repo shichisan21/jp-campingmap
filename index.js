@@ -24,7 +24,7 @@ async function getRequest(prefCode) {
   if (paddedCode < 10) {
     paddedCode = "0" + paddedCode;
   }
-  console.log("県コード", paddedCode);
+  console.log("Request code--->", paddedCode);
   const yolpReqData = await axios.get(
     `https://map.yahooapis.jp/search/local/V1/localSearch?appid=${YAHOO_API_KEY}&results=${RESULT_MAX}&gc=${GENRE}&ac=${paddedCode}`
   );
@@ -71,7 +71,7 @@ async function fetchYolpData(prefCode) {
 }
 
 app.get("/axios", (req, res) => {
-  console.log("params", req.query.prefCode);
+  console.log("Received code--->", req.query.prefCode);
   fetchYolpData(req.query.prefCode).then((xmlContents) => {
     res.json(xmlContents);
   });
