@@ -71,52 +71,58 @@ function App() {
                 </p>
               )}
             </div>
-            {fieldList ? (
-              <>
-                <TableContainer component={Paper}>
-                  <Table sx={{ maxWidth: 800 }} aria-label='simple table'>
-                    <TableHead>
-                      <TableRow>
-                        <TableCell>No</TableCell>
-                        <TableCell align='center'>名前</TableCell>
-                        <TableCell align='center'>住所</TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {fieldList.map((element, index) => {
-                        return (
-                          <TableRow
-                            key={index}
-                            sx={{
-                              "&:last-child td, &:last-child th": { border: 0 },
-                            }}
-                          >
-                            <TableCell component='th' scope='row'>
-                              {index + 1 + ""}
-                            </TableCell>
-                            <TableCell align='right'>{element.name}</TableCell>
-                            <TableCell>
-                              {/* prettier-ignore */}
-                              <a
+            <div className='list-area'>
+              {fieldList ? (
+                <>
+                  <TableContainer component={Paper} sx={{ mb: 4 }}>
+                    <Table sx={{ maxWidth: 800 }} aria-label='simple table'>
+                      <TableHead>
+                        <TableRow>
+                          <TableCell>No</TableCell>
+                          <TableCell align='center'>名前</TableCell>
+                          <TableCell align='center'>住所</TableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        {fieldList.map((element, index) => {
+                          return (
+                            <TableRow
+                              key={index}
+                              sx={{
+                                "&:last-child td, &:last-child th": {
+                                  border: 0,
+                                },
+                              }}
+                            >
+                              <TableCell component='th' scope='row'>
+                                {index + 1 + ""}
+                              </TableCell>
+                              <TableCell align='right'>
+                                {element.name}
+                              </TableCell>
+                              <TableCell>
+                                {/* prettier-ignore */}
+                                <a
                             href={encodeURI(`https://map.yahoo.co.jp/search?q=${element.addr}`)}
                             target='_blank'
                             rel='noreferrer'
                           >
                             {element.addr}
                           </a>
-                            </TableCell>
-                          </TableRow>
-                        );
-                      })}
-                    </TableBody>
-                  </Table>
-                </TableContainer>
-              </>
-            ) : (
-              <div className='list-title-area'>
-                <p>都道府県を選択するとリストが表示されます。</p>
-              </div>
-            )}
+                              </TableCell>
+                            </TableRow>
+                          );
+                        })}
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
+                </>
+              ) : (
+                <div className='list-title-area'>
+                  <p>都道府県を選択するとリストが表示されます。</p>
+                </div>
+              )}
+            </div>
           </Grid>
           <Grid item sm={2}></Grid>
         </Grid>
