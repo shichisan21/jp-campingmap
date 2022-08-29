@@ -19,6 +19,7 @@ import Paper from "@mui/material/Paper";
 function App() {
   const [fieldList, setFieldList] = useState("");
   const [prefName, setPrefName] = useState("東京都");
+  let tel_check = "first";
   // useEffect(() => {
   //   axios
   //     .get("/axios", {
@@ -85,33 +86,39 @@ function App() {
                       </TableHead>
                       <TableBody>
                         {fieldList.map((element, index) => {
-                          return (
-                            <TableRow
-                              key={index}
-                              sx={{
-                                "&:last-child td, &:last-child th": {
-                                  border: 0,
-                                },
-                              }}
-                            >
-                              <TableCell component='th' scope='row'>
-                                {index + 1 + ""}
-                              </TableCell>
-                              <TableCell align='right'>
-                                {element.name}
-                              </TableCell>
-                              <TableCell>
-                                {/* prettier-ignore */}
-                                <a
-                            href={encodeURI(`https://map.yahoo.co.jp/search?q=${element.tel}`)}
-                            target='_blank'
-                            rel='noreferrer'
-                          >
-                            {element.addr}
-                          </a>
-                              </TableCell>
-                            </TableRow>
-                          );
+                          if (tel_check !== element.tel) {
+                            tel_check = element.tel;
+                            return (
+                              <TableRow
+                                key={index}
+                                sx={{
+                                  "&:last-child td, &:last-child th": {
+                                    border: 0,
+                                  },
+                                }}
+                              >
+                                <TableCell component='th' scope='row'>
+                                  {index + 1 + ""}
+                                </TableCell>
+                                <TableCell align='right'>
+                                  {element.name}
+                                </TableCell>
+                                <TableCell>
+                                  {/* prettier-ignore */}
+                                  <a
+                                    href={encodeURI(`https://map.yahoo.co.jp/search?q=${element.tel}`)}
+                                    target='_blank'
+                                    rel='noreferrer'
+                                  >
+                                    {element.addr}
+                                  </a>
+                                </TableCell>
+                              </TableRow>
+                            );
+                          } else {
+                            tel_check = element.tel;
+                            return false;
+                          }
                         })}
                       </TableBody>
                     </Table>

@@ -4,6 +4,7 @@ const express = require("express");
 const axios = require("axios");
 const path = require("path");
 const xpath = require("xpath");
+const { type } = require("os");
 const dom = require("xmldom").DOMParser;
 const select = xpath.useNamespaces({
   a: "http://olp.yahooapis.jp/ydf/1.0",
@@ -28,7 +29,7 @@ async function getRequest(prefCode) {
   const yolpReqData = await axios.get(
     `https://map.yahooapis.jp/search/local/V1/localSearch?appid=${YAHOO_API_KEY}&results=${RESULT_MAX}&gc=${GENRE}&ac=${paddedCode}`
   );
-  console.log("------------Request sended------------");
+  console.log("------------Request sended------------", yolpReqData);
   if (yolpReqData.data) {
     return yolpReqData.data;
   } else {
